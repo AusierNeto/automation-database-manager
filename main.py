@@ -2,7 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 
-from constants import CREATE_TABLE_IF_NOT_EXISTS, INSERT_QUERY, SELECT_QUERY
+from constants import *
+from dotenv import load_dotenv
 
 def get_engine():
     return create_engine(

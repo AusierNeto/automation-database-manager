@@ -22,6 +22,12 @@ class DatabaseManager:
 
     def _get_session(self):
         return self.SessionLocal()
+    
+    def insert_data(self, model_instance):
+        session = self._get_session()
+        with session.begin():
+            session.add(model_instance)
+        session.close()
 
     def execute_query(self, query):
         with self.session.begin():
