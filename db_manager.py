@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 
@@ -28,6 +28,15 @@ class DatabaseManager:
         with session.begin():
             session.add(model_instance)
         session.close()
+
+    def select_all(self, model) -> list[dict]:
+        with self._get_session() as session:
+            rows = session.execute(select(model)).scalars().all()
+            cols = [c.name for c in model.__table__.columns]
+            for row in rows:
+                print(" | ".join(f"{c}: {getattr(row, c)}" for c in cols))
+
+            return [{c: getattr(r, c) for c in cols} for r in rows]
 
     def execute_query(self, query):
         with self.session.begin():

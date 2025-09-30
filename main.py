@@ -1,37 +1,19 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import text
+import os
 
-from constants import *
 from dotenv import load_dotenv
 
-def get_engine():
-    return create_engine(
-        url=DATABASE_URL,
-        pool_pre_ping=True,
-        pool_recycle=1800,
-        future=True
-    )
+from db_manager import DatabaseManager
+from models import User, base
+from constants import *
 
-def SessionLocal():
-    engine = get_engine()
-    Session = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
-    return Session()
 
-def execute_query(session, query):
-    with session.begin():
-        result = session.execute(text(query))
-    return result
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 if __name__ == "__main__":
-    session = SessionLocal()
-    
-    print("Database session created successfully.")
+    db = DatabaseManager(database_url=DATABASE_URL, base=base)
+    # db.insert_data(User(name='Dimas', age=30))
 
-    execute_query(session, CREATE_TABLE_IF_NOT_EXISTS)
-
-    # execute_query(session, INSERT_QUERY)
-
-    results = execute_query(session, SELECT_QUERY)
-    for row in results:
-        print(row)
+    results = db.select_all(User)
+    for user in results: 
+        print(f"User: {user.name}, Age: {user.age}")

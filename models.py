@@ -10,6 +10,3 @@ class User(base):
     name = Column(String(100), nullable=False)
     age = Column(Integer, nullable=False)
 
-
-if __name__ == "__main__":
-    User.__dict__
