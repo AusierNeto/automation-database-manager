@@ -1,8 +1,8 @@
 LICENSE
 README.md
 pyproject.toml
-src/db-manager/__init__.py
-src/db-manager/manager.py
+src/db_manager/__init__.py
+src/db_manager/manager.py
 src/rpa_db_manager.egg-info/PKG-INFO
 src/rpa_db_manager.egg-info/SOURCES.txt
 src/rpa_db_manager.egg-info/dependency_links.txt
