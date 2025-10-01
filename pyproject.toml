@@ -3,14 +3,14 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "meu-pacote"               # nome único no PyPI
+name = "rpa-db-manager"               # nome único no PyPI
 version = "0.1.0"
-description = "Gerenciador de banco de dados genérico com SQLAlchemy"
+description = "Database manager for quick integration of Botcity RPA + Pandas + SQLAlchemy"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {file = "LICENSE"}
 authors = [
-  { name="Ausier Neto", email="ausier@example.com" }
+  { name="Ausier Neto", email="ausierneto@gmail.com" }
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/ausier/meu-pacote"
-Documentation = "https://github.com/ausier/meu-pacote"
-Source = "https://github.com/ausier/meu-pacote"
-Issues = "https://github.com/ausier/meu-pacote/issues"
+Homepage = "https://github.com/AusierNeto/automation-database-manager"
+Documentation = "https://github.com/AusierNeto/automation-database-manager"
+Source = "https://github.com/AusierNeto/automation-database-manager"
+Issues = "https://github.com/AusierNeto/automation-database-manager/issues"

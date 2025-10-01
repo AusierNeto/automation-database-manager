@@ -35,7 +35,7 @@ class DatabaseManager:
         Insere DataFrame rapidamente via bulk_insert.
         """
         records = df.to_dict(orient="records")
-        with self.get_session() as session:
+        with self._get_session() as session:
             session.bulk_insert_mappings(model_cls, records)
             session.commit()
     
