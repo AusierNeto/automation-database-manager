@@ -19,8 +19,8 @@ classifiers = [
 ]
 
 dependencies = [
-  "sqlalchemy>=2.0",
-  "pandas>=2.0"
+  "sqlalchemy>=2.0.43",
+  "pandas>=2.3.3"
 ]
 
 [project.urls]
