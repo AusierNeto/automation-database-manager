@@ -1,10 +1,11 @@
+import pandas as pd
+
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import text
 
 
 class DatabaseManager:
-    def __init__(self, database_url:str, base:any):
+    def __init__(self, database_url:str, Base:any):
         self.engine = create_engine(
             url=database_url,
             pool_pre_ping=True,
@@ -18,7 +19,7 @@ class DatabaseManager:
             future=True
         )
 
-        base.metadata.create_all(bind=self.engine)
+        Base.metadata.create_all(bind=self.engine)
 
     def _get_session(self):
         return self.SessionLocal()
@@ -29,6 +30,22 @@ class DatabaseManager:
             session.add(model_instance)
         session.close()
 
+    def bulk_insert_dataframe(self, df: pd.DataFrame, model_cls):
+        """
+        Insere DataFrame rapidamente via bulk_insert.
+        """
+        records = df.to_dict(orient="records")
+        with self.get_session() as session:
+            session.bulk_insert_mappings(model_cls, records)
+            session.commit()
+    
+    def to_sql_dataframe(self, df: pd.DataFrame, table_name: str, if_exists="append"):
+        """
+        Usa pandas.to_sql() para inserir o DataFrame inteiro.
+        - if_exists = "append" | "replace" | "fail"
+        """
+        df.to_sql(table_name, self.engine, if_exists=if_exists, index=False)
+
     def select_all(self, model) -> list[dict]:
         with self._get_session() as session:
             rows = session.execute(select(model)).scalars().all()
@@ -37,8 +54,3 @@ class DatabaseManager:
                 print(" | ".join(f"{c}: {getattr(row, c)}" for c in cols))
 
             return [{c: getattr(r, c) for c in cols} for r in rows]
-
-    def execute_query(self, query):
-        with self.session.begin():
-            result = self.session.execute(text(query))
-        return result

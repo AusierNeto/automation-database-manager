@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "meu-pacote"               # nome único no PyPI
+version = "0.1.0"
+description = "Gerenciador de banco de dados genérico com SQLAlchemy"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+authors = [
+  { name="Ausier Neto", email="ausier@example.com" }
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+dependencies = [
+  "sqlalchemy>=2.0",
+  "pandas>=2.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/ausier/meu-pacote"
+Documentation = "https://github.com/ausier/meu-pacote"
+Source = "https://github.com/ausier/meu-pacote"
+Issues = "https://github.com/ausier/meu-pacote/issues"
