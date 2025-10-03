@@ -46,7 +46,8 @@ class DatabaseManager:
             Session: A new session bound to the engine.
         """
         return self.SessionLocal()
-
+    
+    ## CREATE
     def insert_data(self, model_instance):
         """Insert a single ORM instance into the database.
 
@@ -58,7 +59,7 @@ class DatabaseManager:
             session.add(model_instance)
         session.close()
 
-    def bulk_insert_dataframe(self, df: pd.DataFrame, model_cls):
+    def bulk_insert_dataframe(self, df: pd.DataFrame, model_cls: any, truncate: bool = False):
         """Insert a pandas DataFrame into the database using bulk insert.
 
         Args:
@@ -71,6 +72,8 @@ class DatabaseManager:
         """
         records = df.to_dict(orient="records")
         with self._get_session() as session:
+            if truncate:
+                session.execute(model_cls.__table__.delete())
             session.bulk_insert_mappings(model_cls, records)
             session.commit()
 
@@ -85,6 +88,7 @@ class DatabaseManager:
         """
         df.to_sql(table_name, self.engine, if_exists=if_exists, index=False)
 
+    ## READ
     def select_all(self, model) -> list[dict]:
         """Retrieve all rows from a given ORM model's table.
 
@@ -102,3 +106,17 @@ class DatabaseManager:
                 print(" | ".join(f"{c}: {getattr(row, c)}" for c in cols))
 
             return [{c: getattr(r, c) for c in cols} for r in rows]
+
+    ## UPDATE
+    # (To be implemented as needed)
+
+    ## DELETE
+    def delete_all(self, model):
+        """Delete all rows from a given ORM model's table.
+
+        Args:
+            model: ORM model class representing the target table.
+        """
+        with self._get_session() as session:
+            session.execute(model.__table__.delete())
+            session.commit()
