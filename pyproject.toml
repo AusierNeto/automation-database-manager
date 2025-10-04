@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rpa-db-manager"               # nome único no PyPI
-version = "0.1.2"
-description = "Database manager for quick integration of Botcity RPA + Pandas + SQLAlchemy"
+version = "0.1.0"
+description = "Database manager for quick integration of Botcity RPA + Pandas Dataframes + SQLAlchemy for simple data persistance."
 readme = "README.md"
 requires-python = ">=3.9"
 license = {file = "LICENSE"}
